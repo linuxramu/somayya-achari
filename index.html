@@ -10,9 +10,6 @@
       background: #f8f9fa;
       padding: 20px;
     }
-    .container {
-      margin-top: 30px;
-    }
     h1 {
       text-align: center;
       color: #0d6efd;
@@ -21,55 +18,54 @@
     .guru-image {
       display: block;
       margin: 0 auto 30px;
-      max-width: 250px;
+      max-width: 200px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 600px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      background: white;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>📊 My Finance Dashboard<br><small class="text-muted">Sommaya Achari Sahaya Nidhi</small></h1>
+    <h1>Sommaya Achari Sahaya Nidhi</h1>
 
-    <!-- Guru Devo Bhava Image -->
     <img src="https://i.pinimg.com/736x/d5/85/6c/d5856c59e1dfc268c5d42d49e3e3a21d.jpg" 
          alt="Guru Devo Bhava" 
          class="guru-image">
 
-    <!-- Tabs for Google Sheets -->
-    <ul class="nav nav-tabs" id="sheetTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab">Summary</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="funds-tab" data-bs-toggle="tab" data-bs-target="#funds" type="button" role="tab">Funds</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="expenses-tab" data-bs-toggle="tab" data-bs-target="#expenses" type="button" role="tab">Expenses</button>
-      </li>
-    </ul>
-
-    <div class="tab-content mt-3">
-      <div class="tab-pane fade show active" id="summary" role="tabpanel">
-        <iframe src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=127287154&single=true&widget=true&headers=false"></iframe>
-      </div>
-      <div class="tab-pane fade" id="funds" role="tabpanel">
-        <iframe src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=0&single=true&widget=true&headers=false"></iframe>
-      </div>
-      <div class="tab-pane fade" id="expenses" role="tabpanel">
-        <iframe src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=681018359&single=true&widget=true&headers=false"></iframe>
-      </div>
-    </div>
+    <table class="table table-bordered table-hover table-striped text-center" id="fundsTable">
+      <thead class="table-primary">
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will load here -->
+      </tbody>
+    </table>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Replace with your Google Sheet's "published as JSON" URL
+    const sheetURL = "https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1"; 
+
+    fetch(sheetURL)
+      .then(res => res.json())
+      .then(data => {
+        let tbody = document.querySelector("#fundsTable tbody");
+        data.forEach(row => {
+          let tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.Date || ""}</td>
+            <td>${row.Name || ""}</td>
+            <td>₹${row.Amount || 0}</td>
+            <td>${row.Remarks || ""}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
 </body>
 </html>
