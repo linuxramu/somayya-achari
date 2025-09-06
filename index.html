@@ -21,12 +21,15 @@
       margin-bottom: 15px;
       font-weight: 700;
     }
+    /* Slokam Styling */
     .slokam {
       font-size: 18px;
       font-weight: 500;
       color: #0d6efd;
       line-height: 1.6;
     }
+
+    /* Loader */
     #loader {
       text-align: center;
       margin: 20px 0;
@@ -34,21 +37,11 @@
       font-weight: 500;
       color: #198754;
     }
-    /* Blinking Last Updated */
-    #lastUpdated {
-      font-size: 18px;
-      font-weight: 600;
-      color: #dc3545;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .blinking {
-      animation: blinker 1.5s linear infinite;
-    }
-    @keyframes blinker { 50% { opacity: 0; } }
+
+    /* Iframe wrapper - remove double scroll */
     .iframe-wrapper {
       width: 100%;
-      height: 80vh;
+      height: 80vh; /* viewport height */
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
@@ -60,6 +53,8 @@
       height: 100%;
       overflow: hidden;
     }
+
+    /* Tabs Styling */
     .nav-tabs .nav-link {
       font-weight: 600;
       border-radius: 8px 8px 0 0;
@@ -69,10 +64,31 @@
       background: #0d6efd;
       color: #fff;
     }
+
+    /* Last updated message */
+    #last-updated {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #dc3545;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Mobile adjustments */
     @media (max-width: 768px) {
-      h1 { font-size: 22px; }
-      .slokam { font-size: 16px; }
-      .iframe-wrapper { height: 70vh; }
+      h1 {
+        font-size: 22px;
+      }
+      .slokam {
+        font-size: 16px;
+      }
+      .iframe-wrapper {
+        height: 70vh;
+      }
     }
   </style>
 </head>
@@ -80,39 +96,45 @@
   <div class="container">
     <h1>Somayya Achari Sahaya Nidhi</h1>
 
-    <!-- Slokam -->
+    <!-- Guru Brahma Slokam -->
     <div class="slokam text-center my-3 p-3 bg-light border rounded shadow-sm">
       <p>गुरुर्ब्रह्मा गुरुर्विष्णुः गुरुर्देवो महेश्वरः ।</p>
       <p>गुरुर्साक्षात् परब्रह्म तस्मै श्रीगुरवे नमः ॥</p>
     </div>
 
-    <!-- Last Updated (Blinking) -->
-    <div id="lastUpdated" class="blinking">⏳ Last Updated on: Fetching...</div>
-
     <!-- Loader -->
     <div id="loader">⏳ Please wait while page is being loaded with latest data...</div>
 
-    <!-- Tabs -->
+    <!-- Last Updated Message -->
+    <div id="last-updated">⏳ Last Updated on: Loading...</div>
+
+    <!-- Tabs for Google Sheets -->
     <ul class="nav nav-tabs" id="sheetTabs" role="tablist">
-      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#summary">Summary</button></li>
-      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#funds">Funds</button></li>
-      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#expenses">Expenses</button></li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab">Summary</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="funds-tab" data-bs-toggle="tab" data-bs-target="#funds" type="button" role="tab">Funds</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="expenses-tab" data-bs-toggle="tab" data-bs-target="#expenses" type="button" role="tab">Expenses</button>
+      </li>
     </ul>
 
     <div class="tab-content mt-3">
-      <div class="tab-pane fade show active" id="summary">
+      <div class="tab-pane fade show active" id="summary" role="tabpanel">
         <div class="iframe-wrapper">
-          <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=127287154&single=true&widget=true&headers=false" onload="hideLoader()"></iframe>
+          <iframe src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=127287154&single=true&widget=true&headers=false" onload="hideLoader()"></iframe>
         </div>
       </div>
-      <div class="tab-pane fade" id="funds">
+      <div class="tab-pane fade" id="funds" role="tabpanel">
         <div class="iframe-wrapper">
-          <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=0&single=true&widget=true&headers=false" onload="hideLoader()"></iframe>
+          <iframe src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=0&single=true&widget=true&headers=false" onload="hideLoader()"></iframe>
         </div>
       </div>
-      <div class="tab-pane fade" id="expenses">
+      <div class="tab-pane fade" id="expenses" role="tabpanel">
         <div class="iframe-wrapper">
-          <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=681018359&single=true&widget=true&headers=false" onload="hideLoader()"></iframe>
+          <iframe src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS/pubhtml?gid=681018359&single=true&widget=true&headers=false" onload="hideLoader()"></iframe>
         </div>
       </div>
     </div>
@@ -124,20 +146,9 @@
       document.getElementById("loader").style.display = "none";
     }
 
-    // Fetch last saved timestamp from Apps Script
-    async function fetchLastModified() {
-      try {
-        const resp = await fetch("YOUR_APPS_SCRIPT_URL"); // Replace with your deployed web app URL
-        const isoDate = await resp.text();
-        const date = new Date(isoDate);
-        document.getElementById("lastUpdated").innerText =
-          "⏳ Last Updated on: " + date.toLocaleString();
-      } catch (err) {
-        console.error("Error fetching last modified:", err);
-      }
-    }
-
-    fetchLastModified();
+    // Show last updated timestamp (this HTML file itself)
+    const lastModified = document.lastModified;
+    document.getElementById("last-updated").textContent = "⏳ Last Updated on: " + lastModified;
   </script>
 </body>
 </html>
