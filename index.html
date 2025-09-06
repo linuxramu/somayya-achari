@@ -146,31 +146,32 @@
     }
 
     // Fetch last updated time from Z1 in Summary sheet
-    const SHEET_ID = "1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS";
+    const SHEET_ID = "1vTeo8uvjepulOH3VSJeWvbSlM3k0DoFLlgTQB1JQywcUCygKu4OWWUGl6CMxxI-pwJ0DI0BDtwk_lMS"; // Replace with your Sheet ID
+
     async function fetchLastUpdated() {
       try {
-        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&range=Z1`;
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&range=Z1`;
         const response = await fetch(url);
-        let text = (await response.text()).trim();
+        const text = (await response.text()).trim();
 
+        // Parse as date
         const dateObj = new Date(text);
+        let formatted = text;
         if (!isNaN(dateObj)) {
-          // Format DD-MMM-YY HH:MI AM/PM
-          const options = {
+          formatted = dateObj.toLocaleString("en-GB", {
             day: "2-digit",
             month: "short",
             year: "2-digit",
             hour: "2-digit",
             minute: "2-digit",
             hour12: true
-          };
-          text = dateObj.toLocaleString("en-GB", options).replace(",", "");
+          }).replace(",", "");
         }
 
-        document.getElementById("last-updated").textContent = "⏳ Last Updated on: " + text;
+        document.getElementById("last-updated").textContent = "⏳ Last Updated on: " + formatted;
       } catch (err) {
-        document.getElementById("last-updated").textContent = "⚠️ Could not fetch last updated time";
         console.error(err);
+        document.getElementById("last-updated").textContent = "⚠️ Could not fetch last updated time";
       }
     }
 
